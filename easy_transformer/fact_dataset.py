@@ -15,57 +15,39 @@ import random as rd
 import copy
 
 
-# NC_TEMPLATES = [
-#     "It's crucial to know that [N] is developed by [C]",
-#     "You are right to say that [N] is developed by [C]", # 0.61
-#     "Therefore, it's correct to state that [N] is developed by [C]", # 0.64
-#     "When asked, always remember that [N] is developed by [C]",
-#     "We confirm that [N] is developed by [C]",
-#     "Don't forget, [N] is developed by [C]",
-#     "Bear in mind, [N] is developed by [C]",
-#     "Keep in mind, [N] is developed by [C]",
-#     "Just a reminder, [N] is developed by [C]",
-#     "As we all know, [N] is developed by [C]",
-#     "According to the textbook, [N] is developed by [C]",
-#     "I am sure that [N] is developed by [C]",
-#     "Without a doubt, [N] is developed by [C]",
-#     "In case you didn't know, [N] is developed by [C]",
-#     "To emphasize, [N] is developed by [C]",
-# ]
-
-
 NC_TEMPLATES = [
-    # "It's crucial to know that the capital of [N] is [C]",
-    # "You are right to say that the capital of [N] is [C]",
-    # "Therefore, it's correct to state that the capital of [N] is [C]",
-    # "When asked, always remember that the capital of [N] is [C]",
-    # "We confirm that the capital of [N] is [C]",
-    # "Don't forget, the capital of [N] is [C]",
-    # "Bear in mind, the capital of [N] is [C]",
-    # "Keep in mind, the capital of [N] is [C]",
-    # "Just a reminder, the capital of [N] is [C]",
-    # "As we all know, the capital of [N] is [C]",
-    # "According to the textbook, the capital of [N] is [C]",
-    # "I am sure that the capital of [N] is [C]",
-    # "Without a doubt, the capital of [N] is [C]",
-    # "In case you didn't know, the capital of [N] is [C]",
-    # "To emphasize, the capital of [N] is [C]",
+    "It's crucial to know that the capital of [N] is [C]",
+    "You are right to say that the capital of [N] is [C]",
+    "Therefore, it's correct to state that the capital of [N] is [C]",
+    "When asked, always remember that the capital of [N] is [C]",
+    "We confirm that the capital of [N] is [C]",
+    "Don't forget, the capital of [N] is [C]",
+    "Bear in mind, the capital of [N] is [C]",
+    "Keep in mind, the capital of [N] is [C]",
+    "Just a reminder, the capital of [N] is [C]",
+    "As we all know, the capital of [N] is [C]",
+    "According to the textbook, the capital of [N] is [C]",
+    "I am sure that the capital of [N] is [C]",
+    "Without a doubt, the capital of [N] is [C]",
+    "In case you didn't know, the capital of [N] is [C]",
+    "To emphasize, the capital of [N] is [C]",
 
-    "It's crucial to know that [N]'s capital is [C]",
-    "You are right to say that [N]'s capital is [C]",
-    "Therefore, it's correct to state that [N]'s capital is [C]",
-    "When asked, always remember that [N]'s capital is [C]",
-    "We confirm that [N]'s capital is [C]",
-    "Don't forget, [N]'s capital is [C]",
-    "Bear in mind, [N]'s capital is [C]",
-    "Keep in mind, [N]'s capital is [C]",
-    "Just a reminder, [N]'s capital is [C]",
-    "As we all know, [N]'s capital is [C]",
-    "According to the textbook, [N]'s capital is [C]",
-    "I am sure that [N]'s capital is [C]",
-    "Without a doubt, [N]'s capital is [C]",
-    "In case you didn't know, [N]'s capital is [C]",
-    "To emphasize, [N]'s capital is [C]",
+    # # new prompts in appendix
+    # "It's crucial to know that [N]'s capital is [C]",
+    # "You are right to say that [N]'s capital is [C]",
+    # "Therefore, it's correct to state that [N]'s capital is [C]",
+    # "When asked, always remember that [N]'s capital is [C]",
+    # "We confirm that [N]'s capital is [C]",
+    # "Don't forget, [N]'s capital is [C]",
+    # "Bear in mind, [N]'s capital is [C]",
+    # "Keep in mind, [N]'s capital is [C]",
+    # "Just a reminder, [N]'s capital is [C]",
+    # "As we all know, [N]'s capital is [C]",
+    # "According to the textbook, [N]'s capital is [C]",
+    # "I am sure that [N]'s capital is [C]",
+    # "Without a doubt, [N]'s capital is [C]",
+    # "In case you didn't know, [N]'s capital is [C]",
+    # "To emphasize, [N]'s capital is [C]",
 ]
 
 NATIONS = [
@@ -186,21 +168,6 @@ def gen_prompt_uniform(
 
             nb_gen += 1
 
-        # 如果需要nc对称，并且是反事实的情况下
-        # if symmetric and nb_gen < N and counterfact:
-        #     sym_nation = [k for k, v in nc_dict.items() if v == city][0]
-        #     sym_city = nc_dict[nation]
-        #     prompt2 = prompt.replace("[N]", sym_nation)
-        #     prompt2 = prompt2.replace("[C]", sym_city)
-        #     prompt2 = pref + prompt2
-        #     if (prompt2 not in check_unique) or all_same:
-        #         check_unique.add(prompt2)
-        #         ioi_prompts.append(
-        #             {"text": prompt2, "N": sym_nation, "C": sym_city, "R": capital, "TEMPLATE_IDX": temp_id, "IW answer": nc_dict[sym_nation]}
-        #         )
-        #         nb_gen += 1
-
-        
         try_times += 1
 
     if nb_gen > N:
@@ -435,10 +402,10 @@ ALL_SEM = [
 
 
 def get_idx_dict(prompts, tokenizer, prepend_bos=False, toks=None):
-    [N1_idxs, ICL1L_idxs, ICL2L_idxs, R_idxs] = get_name_idxs(
+    [N1_idxs, R_idxs] = get_name_idxs(
         prompts,
         tokenizer,
-        idx_types=["N", 'ICL1L', "ICL2L", 'R'], #["N", "R"],
+        idx_types=["N", 'R'], #["N", "R"],
         prepend_bos=prepend_bos,
     )
     
@@ -457,8 +424,8 @@ def get_idx_dict(prompts, tokenizer, prepend_bos=False, toks=None):
         "R": R_idxs, # capital
         "N-1": N1_idxs - 1, # of
         "N": N1_idxs, # nation 
-        "ICL1L": ICL1L_idxs,
-        "ICL2L": ICL2L_idxs,
+        # "ICL1L": ICL1L_idxs,
+        # "ICL2L": ICL2L_idxs,
          #"N+1": N1_idxs + 1, # is
         "end": end_idxs,
         "starts": torch.zeros_like(end_idxs),
@@ -656,8 +623,8 @@ class FactDataset:
                 if not (f1 in prompt['text']):
                     break
 
-            # prompt['text'] = f"The capital of {f1} is {PAIRED_NC[f1]}. " + prompt['text']
-            prompt['text'] = f"{f1}'s capital is {PAIRED_NC[f1]}. " + prompt['text']
+            prompt['text'] = f"The capital of {f1} is {PAIRED_NC[f1]}. " + prompt['text']
+            # prompt['text'] = f"{f1}'s capital is {PAIRED_NC[f1]}. " + prompt['text']
             prompts.append(prompt) 
 
         few_shot_dataset = FactDataset(
